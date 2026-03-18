@@ -1,0 +1,122 @@
+# Asset Tracking System Configuration
+
+# Model Configuration
+model:
+  name: "asset_tracking_classifier"
+  input_features: 4  # location_variance, signal_strength, days_inactive, motion_count
+  hidden_sizes: [32, 16]
+  output_classes: 2  # normal, lost
+  dropout_rate: 0.2
+  activation: "relu"
+
+# Training Configuration
+training:
+  epochs: 50
+  batch_size: 32
+  learning_rate: 0.001
+  optimizer: "adam"
+  loss_function: "binary_crossentropy"
+  validation_split: 0.2
+  early_stopping_patience: 10
+  random_seed: 42
+
+# Data Configuration
+data:
+  n_samples: 10000
+  test_split: 0.2
+  val_split: 0.1
+  synthetic_data:
+    location_variance:
+      mean: 5.0
+      std: 2.0
+    signal_strength:
+      mean: 70.0
+      std: 10.0
+    days_inactive:
+      min: 0
+      max: 30
+    motion_count:
+      lambda: 3.0
+
+# Edge Optimization Configuration
+optimization:
+  quantization:
+    enabled: true
+    method: "dynamic"  # dynamic, static, qat
+    bits: 8
+    calibration_samples: 100
+  pruning:
+    enabled: true
+    method: "magnitude"
+    sparsity: 0.3
+    fine_tune_epochs: 10
+  distillation:
+    enabled: false
+    teacher_model: "baseline"
+    temperature: 3.0
+    alpha: 0.7
+
+# Device Configuration
+device:
+  target: "cpu"  # cpu, cuda, mps, tpu
+  fallback: true
+  edge_runtimes:
+    - "tflite"
+    - "onnx"
+    - "coreml"
+    - "openvino"
+
+# IoT Communication Configuration
+communication:
+  mqtt:
+    broker: "localhost"
+    port: 1883
+    topics:
+      sensor_data: "assets/sensors"
+      alerts: "assets/alerts"
+      status: "assets/status"
+    qos: 1
+    keepalive: 60
+  websocket:
+    enabled: true
+    port: 8765
+    max_connections: 100
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1_score"
+    - "auc"
+  edge_metrics:
+    - "latency_p50"
+    - "latency_p95"
+    - "throughput"
+    - "memory_usage"
+    - "model_size"
+    - "energy_per_inference"
+  stress_test:
+    noise_levels: [0.0, 0.1, 0.2, 0.3]
+    packet_loss_rates: [0.0, 0.05, 0.1, 0.2]
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/asset_tracking.log"
+  max_file_size: "10MB"
+  backup_count: 5
+
+# Demo Configuration
+demo:
+  streamlit:
+    port: 8501
+    host: "localhost"
+  gradio:
+    port: 7860
+    share: false
+  simulation:
+    real_time_factor: 1.0
+    update_interval: 1.0  # seconds

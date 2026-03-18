@@ -1,0 +1,80 @@
+# Device-specific configurations for edge deployment
+
+# Raspberry Pi 4 Configuration
+raspberry_pi_4:
+  device_type: "arm64"
+  cpu_cores: 4
+  memory_gb: 4
+  storage_gb: 32
+  power_consumption_w: 3.4
+  target_runtime: "tflite"
+  optimization_level: "high"
+  batch_size: 1
+  max_latency_ms: 100
+  memory_limit_mb: 512
+
+# NVIDIA Jetson Nano Configuration
+jetson_nano:
+  device_type: "arm64"
+  cpu_cores: 4
+  gpu_cores: 128
+  memory_gb: 4
+  storage_gb: 16
+  power_consumption_w: 5.0
+  target_runtime: "tensorrt"
+  optimization_level: "maximum"
+  batch_size: 1
+  max_latency_ms: 50
+  memory_limit_mb: 1024
+
+# Android Mobile Device Configuration
+android_mobile:
+  device_type: "arm64"
+  cpu_cores: 8
+  memory_gb: 6
+  storage_gb: 128
+  power_consumption_w: 2.0
+  target_runtime: "tflite"
+  optimization_level: "medium"
+  batch_size: 1
+  max_latency_ms: 200
+  memory_limit_mb: 256
+
+# iOS Device Configuration
+ios_device:
+  device_type: "arm64"
+  cpu_cores: 6
+  memory_gb: 4
+  storage_gb: 64
+  power_consumption_w: 1.5
+  target_runtime: "coreml"
+  optimization_level: "medium"
+  batch_size: 1
+  max_latency_ms: 150
+  memory_limit_mb: 128
+
+# Intel NUC Edge Configuration
+intel_nuc:
+  device_type: "x86_64"
+  cpu_cores: 4
+  memory_gb: 8
+  storage_gb: 256
+  power_consumption_w: 15.0
+  target_runtime: "openvino"
+  optimization_level: "high"
+  batch_size: 4
+  max_latency_ms: 50
+  memory_limit_mb: 2048
+
+# MCU Configuration (ESP32-like)
+mcu_device:
+  device_type: "arm32"
+  cpu_cores: 2
+  memory_mb: 4
+  storage_mb: 16
+  power_consumption_mw: 100
+  target_runtime: "tflite_micro"
+  optimization_level: "maximum"
+  batch_size: 1
+  max_latency_ms: 1000
+  memory_limit_kb: 2
